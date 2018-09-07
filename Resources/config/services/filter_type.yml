@@ -1,0 +1,90 @@
+services:
+    CleverAge\EAVManager\AkeneoProductBundle\Filter\Type\TextFilterType:
+        public: false
+        autowire: true
+        arguments:
+            $name: text
+            $formType: Symfony\Component\Form\Extension\Core\Type\TextType
+        tags:
+            - { name: sidus.filter_type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Filter\Type\ChoiceFilterType:
+        public: false
+        autowire: true
+        arguments:
+            $name: choice
+            $formType: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+        calls:
+            - [setCache, ['@eav_manager.akeneo.api.cache']]
+        tags:
+            - { name: sidus.filter_type }
+
+    eav_manager.akeneo.filter.type.checkbox:
+        class: CleverAge\EAVManager\AkeneoProductBundle\Filter\Type\TextFilterType # No need for custom class
+        public: false
+        autowire: true
+        arguments:
+            $name: switch
+            $formType: Sidus\EAVBootstrapBundle\Form\Type\SwitchType
+        tags:
+            - { name: sidus.filter_type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Filter\Type\ScopeFilterType:
+        public: false
+        autowire: true
+        arguments:
+            $name: scope
+            $formType: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+        tags:
+            - { name: sidus.filter_type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Filter\Type\FamilyFilterType:
+        public: false
+        autowire: true
+        arguments:
+            $name: family
+            $formType: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+        calls:
+            - [setCache, ['@eav_manager.akeneo.api.cache']]
+        tags:
+            - { name: sidus.filter_type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Filter\Type\MultiTextFilterType:
+        public: false
+        autowire: true
+        arguments:
+            $name: akeneo_multi_text
+            $formType: Symfony\Component\Form\Extension\Core\Type\TextType
+        tags:
+            - { name: sidus.filter_type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Filter\Type\AutoCompleteTextFilterType:
+        autowire: true
+        arguments:
+            $name: auto_complete_text
+            $formType: CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoProductAutocompleteDataSelectorType
+            $formOptions: { endpoint: product }
+        tags:
+            - { name: sidus.filter_type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Filter\Type\CompletenessFilterType:
+        public: false
+        autowire: true
+        arguments:
+            $name: completeness
+            $formType: Symfony\Component\Form\Extension\Core\Type\ChoiceType
+        tags:
+            - { name: sidus.filter_type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Filter\Type\EAVPreFilterFilterType:
+        public: false
+        autowire: true
+        arguments:
+            $name: eav_pre_filter
+            $formType: CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoEavPreFilterType
+        calls:
+            - [setEAVFilterHelper, ['@Sidus\EAVFilterBundle\Filter\EAVFilterHelper']]
+            - [setFamilyRegistry, ['@Sidus\EAVModelBundle\Registry\FamilyRegistry']]
+            - [setEntityManager, ['@doctrine.orm.entity_manager']]
+        tags:
+            - { name: sidus.filter_type }

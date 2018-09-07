@@ -1,0 +1,30 @@
+services:
+    CleverAge\EAVManager\AkeneoProductBundle\Provider\ProductLabelProvider:
+        public: false
+        autowire: true
+        tags:
+            - { name: akeneo.label_provider }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Provider\Attribute\AttributeTextLabelProvider:
+        public: false
+        autowire: true
+        tags:
+            - { name: akeneo.label_provider }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Provider\Attribute\AttributeSelectLabelProvider:
+        public: false
+        autowire: true
+        tags:
+            - { name: akeneo.label_provider }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Provider\Family\FamilyLabelProvider:
+        public: false
+        autowire: true
+        tags:
+            - { name: akeneo.label_provider }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Provider\Category\CategoriesLabelProvider:
+        public: false
+        autowire: true
+        tags:
+            - { name: akeneo.label_provider }

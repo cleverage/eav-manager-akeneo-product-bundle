@@ -1,0 +1,22 @@
+{% extends '@CleverAgeEAVManagerAdmin/Base/edit.html.twig' %}
+
+{% block breadcrumb_data %}
+    {% if admin.hasAction('edit') and admin.currentAction != 'create' and data is defined and data.id %}
+        <li>
+            <!-- for model -->
+            {% if data.code is defined and data.family_variant is defined %}
+                <a href="{{ admin_entity_path(admin, data, 'edit', {
+                    identifier: data.code,
+                    familyCode: app.request.attributes.get('familyCode')
+                }) }}">
+                    {{ data.code }}
+                </a>
+            <!-- for product and variant -->
+            {% else %}
+                <a href="{{ admin_entity_path(admin, data, 'edit') }}">
+                    {{ data.identifier|default('Product') }}
+                </a>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endblock %}

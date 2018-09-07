@@ -1,0 +1,62 @@
+parameters:
+    eav_manager.akeneo.form.type.product.class: CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoProductType
+    eav_manager.akeneo.form.type.product_model.class: CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoProductModelType
+
+services:
+    CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductTransformer:
+        public: false
+        autowire: true
+
+    eav_manager.akeneo.transformer.product_model:
+        class: CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductModelTransformer
+        arguments:
+            - '@Akeneo\Pim\ApiClient\AkeneoPimClientInterface'
+            - '@eav_manager.akeneo.manager.context'
+
+    eav_manager.akeneo.form.type.product:
+        class: '%eav_manager.akeneo.form.type.product.class%'
+        public: false
+        autowire: true
+        arguments:
+            $transformer: '@CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductTransformer'
+        calls:
+            - [setCache, ['@eav_manager.akeneo.api.cache']]
+        tags:
+            - { name: form.type }
+
+    eav_manager.akeneo.form.type.product_model:
+        class: '%eav_manager.akeneo.form.type.product_model.class%'
+        arguments:
+            - '@Akeneo\Pim\ApiClient\AkeneoPimClientInterface'
+            - '@eav_manager.akeneo.transformer.product_model'
+            - '@form.registry'
+        calls:
+            - [setCache, ['@eav_manager.akeneo.api.cache']]
+        tags:
+            - { name: form.type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoApiSelectorType:
+        public: false
+        autowire: true
+        tags:
+            - { name: form.type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Form\Type\MetricType:
+        public: false
+        autowire: true
+        tags:
+            - { name: form.type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoProductAutocompleteDataSelectorType:
+        public: false
+        autowire: true
+        tags:
+            - { name: form.type }
+
+    CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoEavPreFilterType:
+        public: false
+        autowire: true
+        arguments:
+            $dataClass: '%sidus_eav_model.entity.data.class%'
+        tags:
+            - { name: form.type }

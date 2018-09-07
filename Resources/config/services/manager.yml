@@ -1,0 +1,7 @@
+services:
+    eav_manager.akeneo.manager.context:
+        class: CleverAge\EAVManager\AkeneoProductBundle\Context\AkeneoContextManager
+        arguments:
+            - '@session'
+            - '%eav_manager.akeneo_product.default.locale%'
+            - '%eav_manager.akeneo_product.default.channel%'

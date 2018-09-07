@@ -1,0 +1,3 @@
+services:
+    eav_manager.akeneo.registry.label_provider:
+        class: CleverAge\EAVManager\AkeneoProductBundle\Registry\LabelProviderRegistry

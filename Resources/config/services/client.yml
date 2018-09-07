@@ -1,0 +1,42 @@
+parameters:
+    eav_manager.akeneo.client_builder.class: CleverAge\EAVManager\AkeneoProductBundle\ApiClient\AkeneoPimClientBuilder
+    eav_manager.akeneo.default_client.class: Akeneo\Pim\ApiClient\AkeneoPimClientInterface
+    eav_manager.akeneo.client_registry.class: CleverAge\EAVManager\AkeneoProductBundle\ApiClient\AkeneoPimClientRegistry
+    eav_manager.akeneo.client.class: CleverAge\EAVManager\AkeneoProductBundle\ApiClient\AkeneoPimClient
+    eav_manager.akeneo.client_getter.class: CleverAge\EAVManager\AkeneoProductBundle\ApiClient\Client\ApiEndpointGetter
+
+services:
+    eav_manager.akeneo.api.cache:
+        class: Symfony\Component\Cache\Simple\FilesystemCache
+
+    eav_manager.akeneo.client_builder:
+        class: '%eav_manager.akeneo.client_builder.class%'
+        arguments:
+            - '%eav_manager.akeneo_product.api.base_uri%'
+        calls:
+            - [setCache, ['@eav_manager.akeneo.api.cache']]
+            - [setStopwatch, ['@?debug.stopwatch']]
+
+    eav_manager.akeneo.default_client:
+        class: '%eav_manager.akeneo.default_client.class%'
+        factory: ['@eav_manager.akeneo.client_builder', buildAuthenticatedByPassword]
+        arguments:
+            - '%eav_manager.akeneo_product.api.client_id%'
+            - '%eav_manager.akeneo_product.api.secret%'
+            - '%eav_manager.akeneo_product.api.username%'
+            - '%eav_manager.akeneo_product.api.password%'
+
+    eav_manager.akeneo.client_registry:
+        class: '%eav_manager.akeneo.client_registry.class%'
+        arguments:
+            - '@eav_manager.akeneo.default_client'
+
+    Akeneo\Pim\ApiClient\AkeneoPimClientInterface:
+        class: '%eav_manager.akeneo.client.class%'
+        arguments:
+            - '@eav_manager.akeneo.client_registry'
+
+    eav_manager.akeneo.client_getter:
+        class: '%eav_manager.akeneo.client_getter.class%'
+        arguments:
+            - '@Akeneo\Pim\ApiClient\AkeneoPimClientInterface'

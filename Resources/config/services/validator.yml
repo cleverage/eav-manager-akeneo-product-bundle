@@ -1,0 +1,21 @@
+services:
+    eav_manager.akeneo.validator.context.factory:
+        class:  Symfony\Component\Validator\Context\ExecutionContextFactory
+        public: false
+        arguments:
+            - '@translator.default'
+            - '%validator.translation_domain%'
+
+    eav_manager.akeneo.validation_mapper:
+        class: CleverAge\EAVManager\AkeneoProductBundle\Form\Validator\ValidationMapper
+        arguments:
+            - '@eav_manager.akeneo.validator.context.factory'
+            - '@validator'
+
+    eav_manager.akeneo.form.validator.base_loader:
+        class: Sidus\BaseBundle\Validator\Mapping\Loader\BaseLoader
+
+    eav_manager.akeneo.form.validator.constraint_loader:
+        class: CleverAge\EAVManager\AkeneoProductBundle\Form\Validator\ConstraintLoader
+        arguments:
+            - '@eav_manager.akeneo.form.validator.base_loader'

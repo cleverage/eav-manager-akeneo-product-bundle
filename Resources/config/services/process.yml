@@ -1,0 +1,10 @@
+services:
+    CleverAge\EAVManager\AkeneoProductBundle\Process\Task\ApiReaderTask:
+        shared: false
+        public: true
+        autowire: true
+
+    CleverAge\EAVManager\AkeneoProductBundle\Process\Task\ApiWriterTask:
+        shared: false
+        public: true
+        autowire: true

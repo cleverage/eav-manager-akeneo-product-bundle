@@ -1,0 +1,4 @@
+services:
+    CleverAge\EAVManager\AkeneoProductBundle\Renderer\AkeneoRenderer:
+        autowire: true
+        public: false

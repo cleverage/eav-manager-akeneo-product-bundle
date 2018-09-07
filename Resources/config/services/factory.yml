@@ -1,0 +1,6 @@
+services:
+    CleverAge\EAVManager\AkeneoProductBundle\Factory\AkeneoQueryHandlerFactory:
+        public: false
+        autowire: true
+        tags:
+            - { name: sidus.query_handler_factory }

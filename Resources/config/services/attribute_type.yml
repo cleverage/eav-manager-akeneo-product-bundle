@@ -1,0 +1,10 @@
+services:
+    eav_manager.akeneo.attribute_type:
+        class: Sidus\EAVModelBundle\Model\AttributeType
+        arguments:
+            - akeneo_product
+            - stringValue
+            - CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoApiSelectorType
+            - { endpoint: product, search_by: sku, operator: CONTAINS }
+        tags:
+            - { name: sidus.attribute_type }

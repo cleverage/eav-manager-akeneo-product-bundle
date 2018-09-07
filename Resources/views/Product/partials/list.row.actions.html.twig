@@ -1,0 +1,36 @@
+{% extends '@CleverAgeEAVManagerAdmin/Base/partials/list.row.actions.html.twig' %}
+
+{% block list_row_actions %}
+    {% import _self as utilities %}
+    {{ utilities.action_button(admin, result, 'edit', {
+        class: 'btn btn-primary',
+    }) }}
+    {% if result['parent'] is not null %}
+        {{ utilities.action_button(admin, result, 'editModel', {
+            class: 'btn btn-primary',
+            icon: 'pencil-square',
+            route_parameters: {
+                family: result['family'],
+                code: result['parent']
+            }
+        }) }}
+    {% endif %}
+{% endblock %}
+
+{% macro action_button(admin, entity, actionName, options) %}
+    {% if admin.hasAction(actionName) %}
+        {% if options.title is defined %}
+            {% set title = options.title %}
+        {% else %}
+            {% set title = tryTrans([
+            'admin.'~admin.code~actionName~'.label',
+            'admin.action.'~actionName~'.label',
+            ], {}, actionName) %}
+        {% endif %}
+        <a href="{{ admin_entity_path(admin, entity, actionName, options.route_parameters is defined ? options.route_parameters : []) }}" title="{{ title }}"
+           class="{{ options.class|default('btn btn-default') }}"
+           data-target-element="{{ options.target|default('#tg_right') }}">
+            <i class="fa fa-{{ options.icon is defined ? options.icon : actionName }}"></i>
+        </a>
+    {% endif %}
+{% endmacro %}

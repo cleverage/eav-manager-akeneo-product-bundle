@@ -1,0 +1,40 @@
+{
+  "name": "cleverage/eav-manager-akeneo-product-bundle",
+  "description": "Interface to interact with Akeneo by the Clever Data Manager and Akeneo API ",
+  "keywords": [
+    "eav-manager",
+    "akeneo",
+    "client",
+    "api",
+  ],
+  "homepage": "https://github.com/cleverage/process-bundle",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vincent Chalnot",
+      "email": "vchalnot@clever-age.com",
+      "homepage": "http://chalnot.fr",
+      "role": "Lead Developer"
+    },
+    {
+      "name": "Fabien Salles",
+      "email": "fsalles@clever-age.com",
+      "role": "Developer"
+    },
+  ],
+  "autoload": {
+    "psr-4": {
+      "CleverAge\\EAVManager\\AkeneoProductBundle\\": ""
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "cleverage/eav-manager/": "dev-v2.0-dev",
+    "cleverage/process-bundle": "dev-v2.0-dev",
+    "akeneo/api-php-client": "^1.0",
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.4"
+  }
+}
