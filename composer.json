@@ -32,10 +32,15 @@
     "php": ">=7.1",
     "cleverage/eav-manager": "dev-v2.0-dev",
     "cleverage/process-bundle": "dev-v2.0-dev",
-    "akeneo/api-php-client": "^1.0"
+    "akeneo/api-php-client": "^1.0",
+    "php-http/client-implementation": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "~6.4"
+    "phpunit/phpunit": "~6.4",
+    "php-http/guzzle6-adapter": "^1.1"
+  },
+  "suggest": {
+    "php-http/guzzle6-adapter": "In order to use Guzzle v6 as the HTTP client"
   },
   "minimum-stability": "dev",
   "prefer-stable": true
