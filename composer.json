@@ -7,7 +7,7 @@
     "client",
     "api"
   ],
-  "homepage": "https://github.com/cleverage/process-bundle",
+  "homepage": "https://github.com/cleverage/eav-manager-akeneo-product-bundle",
   "type": "library",
   "license": "MIT",
   "authors": [
