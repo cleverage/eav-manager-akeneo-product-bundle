@@ -160,7 +160,7 @@ class ProductController extends AbstractAdminController
                 'text' => $labelProvider->getLabelFromData($data),
             ];
 
-            if (null !== $replaceText && $contextManager->isPropertyExit($replaceText, $data)) {
+            if (null !== $replaceText && $contextManager->isPropertyExist($replaceText, $data)) {
                 $result['text'] = $contextManager->getPropertyValue($replaceText, $data);
             }
 

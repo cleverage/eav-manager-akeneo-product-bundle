@@ -1,7 +1,9 @@
 services:
-    eav_manager.akeneo.manager.context:
-        class: CleverAge\EAVManager\AkeneoProductBundle\Context\AkeneoContextManager
-        arguments:
-            - '@session'
-            - '%eav_manager.akeneo_product.default.locale%'
-            - '%eav_manager.akeneo_product.default.channel%'
+    CleverAge\EAVManager\AkeneoProductBundle\Context\AkeneoContextManager:
+        autowire: true
+        calls:
+            - [setLocale, ['%eav_manager.akeneo_product.default.locale%']]
+            - [setScope, ['%eav_manager.akeneo_product.default.channel%']]
+            - [setSelectAttributeLabelProvider, ['@CleverAge\EAVManager\AkeneoProductBundle\Provider\Attribute\AttributeSelectLabelProvider']]
+
+    eav_manager.akeneo.manager.context: '@CleverAge\EAVManager\AkeneoProductBundle\Context\AkeneoContextManager'

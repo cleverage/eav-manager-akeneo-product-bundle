@@ -2,6 +2,7 @@
 
 namespace CleverAge\EAVManager\AkeneoProductBundle\Context;
 
+use CleverAge\EAVManager\AkeneoProductBundle\Provider\Attribute\AttributeSelectLabelProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -20,18 +21,16 @@ class AkeneoContextManager
     /** @var string */
     protected $scope;
 
+    /** @var AttributeSelectLabelProvider  */
+    protected $selectAttributeLavelProvider;
+
     /**
      * AkeneoContextManager constructor.
      *
      * @param SessionInterface $session
-     * @param string           $locale
-     * @param string           $scope
      */
-    public function __construct(SessionInterface $session, string $locale, string $scope)
-    {
+    public function __construct(SessionInterface $session) {
         $this->session = $session;
-        $this->locale = $locale;
-        $this->scope = $scope;
     }
 
     /**
@@ -80,6 +79,11 @@ class AkeneoContextManager
         } else {
             $this->scope = $scope;
         }
+    }
+
+    public function setSelectAttributeLabelProvider(AttributeSelectLabelProvider $selectAttributeLabekProvider)
+    {
+        $this->selectAttributeLavelProvider = $selectAttributeLabekProvider;
     }
 
     /**
@@ -228,7 +232,7 @@ class AkeneoContextManager
     }
 
 
-    public function isPropertyExit(string $attributeCode, array $product): bool
+    public function isPropertyExist(string $attributeCode, array $product): bool
     {
         return array_key_exists($attributeCode, $product['values'])
             && !empty($product['values'][$attributeCode]);
@@ -238,14 +242,51 @@ class AkeneoContextManager
      * @param string $attributeCode
      * @param array  $product
      *
-     * @return null|string
+     * @return mixed
      */
-    public function getPropertyValue(string $attributeCode, array $product) :? string
+    public function getPropertyValue(string $attributeCode, array $product)
     {
-        if (!$this->isPropertyExit($attributeCode, $product)) {
+        if (!$this->isPropertyExist($attributeCode, $product)) {
             return null;
         }
 
         return $this->getValue($product['values'][$attributeCode]);
+    }
+
+    /**
+     * @param array $product
+     * @param string $attributeCode
+     * @return null|string
+     */
+    public function getPropertyLabel(string $attributeCode, array $product): ?string
+    {
+        if (!$this->isPropertyExist($attributeCode, $product)) {
+            return null;
+        }
+
+        return $this->selectAttributeLavelProvider->getLabelFromData(array_merge(
+            ['code' => $attributeCode],
+            $product['values'][$attributeCode]
+        ));
+    }
+
+    /**
+     * @param array  $product
+     * @param string $attributeCode
+     *
+     * @return null|string
+     * @throws \RuntimeException
+     */
+    public function getAmount(array $product, string $attributeCode): ?string
+    {
+        if (!$this->isPropertyExist($attributeCode,$product)) {
+            return null;
+        }
+
+        $data = $this->getValue($product['values'][$attributeCode]);
+
+        $data = isset($data[0]['amount']) ? $data[0] : $data;
+
+        return isset($data['amount']) ? number_format((float) $data['amount'], 2, ',', " ") : null;
     }
 }
