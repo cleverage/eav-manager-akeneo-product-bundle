@@ -1,9 +1,10 @@
 services:
     CleverAge\EAVManager\AkeneoProductBundle\Context\AkeneoContextManager:
         autowire: true
+        arguments:
+            $locale: '%eav_manager.akeneo_product.default.locale%'
+            $scope: '%eav_manager.akeneo_product.default.channel%'
         calls:
-            - [setLocale, ['%eav_manager.akeneo_product.default.locale%']]
-            - [setScope, ['%eav_manager.akeneo_product.default.channel%']]
             - [setSelectAttributeLabelProvider, ['@CleverAge\EAVManager\AkeneoProductBundle\Provider\Attribute\AttributeSelectLabelProvider']]
 
     eav_manager.akeneo.manager.context: '@CleverAge\EAVManager\AkeneoProductBundle\Context\AkeneoContextManager'

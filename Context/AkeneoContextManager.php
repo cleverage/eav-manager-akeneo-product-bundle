@@ -29,8 +29,11 @@ class AkeneoContextManager
      *
      * @param SessionInterface $session
      */
-    public function __construct(SessionInterface $session) {
+    public function __construct(SessionInterface $session, string $locale, string $scope)
+    {
         $this->session = $session;
+        $this->locale = $locale;
+        $this->scope = $scope;
     }
 
     /**
