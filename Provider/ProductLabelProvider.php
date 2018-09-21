@@ -45,7 +45,7 @@ class ProductLabelProvider implements LabelProviderInterface
         $label = "[{$family['code']} #{$data['identifier']}]";
         foreach ($data['values'][$family['attribute_as_label']] ?? [] as $value) {
             if ($this->contextManager->isContextMatching($value['locale'], $value['scope'])) {
-                return $value['data'];
+                return $value['data'] ?? '';
             }
         }
 
