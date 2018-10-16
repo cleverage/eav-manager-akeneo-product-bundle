@@ -32,7 +32,7 @@
     "php": ">=7.1",
     "cleverage/eav-manager": "dev-v2.0-dev",
     "cleverage/process-bundle": "dev-v2.0-dev",
-    "akeneo/api-php-client": "^1.0",
+    "akeneo/api-php-client": "^3.0",
     "php-http/client-implementation": "^1.0"
   },
   "require-dev": {
