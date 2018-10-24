@@ -61,7 +61,7 @@ class AkeneoPimClientBuilder extends \Akeneo\Pim\ApiClient\AkeneoPimClientBuilde
      */
     protected function buildAuthenticatedClient(Authentication $authentication)
     {
-        list($resourceClient, $pageFactory, $cursorFactory) = $this->setUp($authentication);
+        list($resourceClient, $pageFactory, $cursorFactory, $fileSystem) = $this->setUp($authentication);
 
         $client = new AkeneoPimClient(
             $authentication,
@@ -71,7 +71,7 @@ class AkeneoPimClientBuilder extends \Akeneo\Pim\ApiClient\AkeneoPimClientBuilde
             $this->createApiWithCache(AttributeOptionApi::class, $resourceClient, $pageFactory, $cursorFactory),
             $this->createApiWithCache(AttributeGroupApi::class, $resourceClient, $pageFactory, $cursorFactory),
             $this->createApiWithCache(FamilyApi::class, $resourceClient, $pageFactory, $cursorFactory),
-            new ProductMediaFileApi($resourceClient, $pageFactory, $cursorFactory),
+            new ProductMediaFileApi($resourceClient, $pageFactory, $cursorFactory, $fileSystem),
             $this->createApiWithCache(LocaleApi::class, $resourceClient, $pageFactory, $cursorFactory),
             $this->createApiWithCache(ChannelApi::class, $resourceClient, $pageFactory, $cursorFactory),
             $this->createApiWithCache(CurrencyApi::class, $resourceClient, $pageFactory, $cursorFactory),

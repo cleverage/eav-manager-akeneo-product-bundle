@@ -114,15 +114,16 @@ class AkeneoProductType extends AbstractType implements CacheAwareInterface
             ]
         );
 
-        $resolver->setAllowedTypes('validation_rules', ['array']);
-        $resolver->setAllowedTypes('disabled_attributes', ['array']);
-        $resolver->setAllowedTypes('unsupported_attributes', ['array']);
         $resolver->setRequired(
             [
                 'locale',
                 'scope',
             ]
         );
+
+        $resolver->setAllowedTypes('validation_rules', ['array']);
+        $resolver->setAllowedTypes('disabled_attributes', ['array']);
+        $resolver->setAllowedTypes('unsupported_attributes', ['array']);
     }
 
     /**
@@ -414,9 +415,7 @@ class AkeneoProductType extends AbstractType implements CacheAwareInterface
                 break;
 //             @TODO
 //            case AkeneoAttributeTypes::PRICE_COLLECTION:
-//            case AkeneoAttributeTypes::ASSETS_COLLECTION:
 //            case AkeneoAttributeTypes::FILE:
-//            case AkeneoAttributeTypes::IMAGE:
 //            case AkeneoAttributeTypes::REFERENCE_DATA_MULTI_SELECT:
 //            case AkeneoAttributeTypes::REFERENCE_DATA_SIMPLE_SELECT:
             default:
@@ -445,13 +444,7 @@ class AkeneoProductType extends AbstractType implements CacheAwareInterface
      */
     protected function getFormOptions(string $formType, array $attribute, array $family, array $options): array
     {
-        $formOptions = [
-            'label' => $attribute['labels'][$options['locale']] ?? $attribute['code'],
-            'required' => $this->fieldIsRequired($options['scope'], $attribute['code'], $family),
-            'constraints' => $this->getAttributeConstraints($attribute, $family, $options),
-            'translation_domain' => false,
-            'disabled' => $this->attributeIsDisabled($attribute, $options),
-        ];
+        $formOptions = $this->initializeCommunFormOptions($attribute, $family, $options);
 
         switch ($attribute['type']) {
             case AkeneoAttributeTypes::OPTION_MULTI_SELECT:
@@ -492,6 +485,17 @@ class AkeneoProductType extends AbstractType implements CacheAwareInterface
         }
 
         return $formOptions;
+    }
+
+    protected function initializeCommunFormOptions(array $attribute, array $family, array $options): array
+    {
+        return [
+            'label' => $attribute['labels'][$options['locale']] ?? $attribute['code'],
+            'required' => $this->fieldIsRequired($options['scope'], $attribute['code'], $family),
+            'constraints' => $this->getAttributeConstraints($attribute, $family, $options),
+            'translation_domain' => false,
+            'disabled' => $this->attributeIsDisabled($attribute, $options),
+        ];
     }
 
     /**
@@ -650,7 +654,6 @@ class AkeneoProductType extends AbstractType implements CacheAwareInterface
     {
         return [
             AkeneoAttributeTypes::PRICE_COLLECTION,
-            AkeneoAttributeTypes::ASSETS_COLLECTION,
             AkeneoAttributeTypes::FILE,
             AkeneoAttributeTypes::IMAGE,
             AkeneoAttributeTypes::REFERENCE_DATA_MULTI_SELECT,

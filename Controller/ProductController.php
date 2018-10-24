@@ -104,7 +104,9 @@ class ProductController extends AbstractAdminController
     {
         return array_merge(
             $this->getDefaultContext(),
-            ['validation_rules' => $this->getValidationRules($request, $product)]
+            [
+                'validation_rules' => $this->getValidationRules($request, $product)
+            ]
         );
     }
 
