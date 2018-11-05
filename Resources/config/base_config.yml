@@ -1,0 +1,35 @@
+sidus_admin:
+    configurations:
+        products:
+            controller: CleverAgeEAVManagerAkeneoProductBundle:Product
+            entity: ~
+            prefix: /products
+            actions:
+                list:
+                    path: /list
+                    template: '@CleverAgeEAVManagerAdmin/Base/list.html.twig'
+                edit:
+                    path: /{identifier}/edit
+                    # Form type is set dynamically at runtime
+                    template: 'CleverAgeEAVManagerAkeneoProductBundle:Product:edit.html.twig'
+                editModel:
+                    path:     /product/models/{family}/{code}/edit
+                    defaults:
+                        _controller: FrameworkBundle:Redirect:redirect
+                        route: sidus_admin.product_models.edit
+                        permanent: true
+                apiSearch:
+                    path: /_api/search/{endpoint}
+            options:
+                icon: shopping-cart
+        product_models:
+            controller: CleverAgeEAVManagerAkeneoProductBundle:ProductModel
+            entity: ~
+            prefix: /product/models
+            actions:
+                list:
+                    path: /list
+                edit:
+                    path: /{family}/{code}/edit
+                    form_type: CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoProductModelType
+                    template: '@CleverAgeEAVManagerAkeneoProduct/Product/edit.html.twig'
