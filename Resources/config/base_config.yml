@@ -2,7 +2,7 @@ sidus_admin:
     configurations:
         products:
             controller: CleverAgeEAVManagerAkeneoProductBundle:Product
-            entity: ~
+            entity: 'Product'
             prefix: /products
             actions:
                 list:
