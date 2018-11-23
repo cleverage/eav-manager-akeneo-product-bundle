@@ -11,10 +11,6 @@ services:
         public: false
         autowire: true
 
-    CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductTransformer:
-        public: false
-        autowire: true
-
     eav_manager.akeneo.transformer.product_model:
         class: CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductModelTransformer
         arguments:
