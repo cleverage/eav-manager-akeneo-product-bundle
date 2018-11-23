@@ -13,6 +13,7 @@ use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use CleverAge\EAVManager\AkeneoProductBundle\Attribute\Type\AkeneoAttributeTypes;
 use CleverAge\EAVManager\AkeneoProductBundle\Cache\CacheAwareInterface;
 use CleverAge\EAVManager\AkeneoProductBundle\Cache\CacheAwareTrait;
+use CleverAge\EAVManager\AkeneoProductBundle\Form\EventListener\AkeneoListenerFactoryInterface;
 use CleverAge\EAVManager\AkeneoProductBundle\Form\EventListener\AkeneoProductListener;
 use Mopa\Bundle\BootstrapBundle\Form\Type\TabType;
 use Sidus\EAVBootstrapBundle\Form\Type\DatePickerType;
@@ -50,21 +51,27 @@ class AkeneoProductType extends AbstractType implements CacheAwareInterface
     /** @var ResourceCursorInterface */
     protected $attributeGroups;
 
+    /** @var AkeneoListenerFactoryInterface */
+    protected $akeneoListenerFactory;
+
     /**
-     * @param AkeneoPimClientInterface $client
-     * @param DataTransformerInterface $transformer
-     * @param FormRegistryInterface    $formRegistry
+     * @param AkeneoPimClientInterface       $client
+     * @param DataTransformerInterface       $transformer
+     * @param FormRegistryInterface          $formRegistry
+     * @param AkeneoListenerFactoryInterface $akeneoListenerFactory
      *
      * @throws \Akeneo\Pim\ApiClient\Exception\HttpException
      */
     public function __construct(
         AkeneoPimClientInterface $client,
         DataTransformerInterface $transformer,
-        FormRegistryInterface $formRegistry
+        FormRegistryInterface $formRegistry,
+        AkeneoListenerFactoryInterface $akeneoListenerFactory
     ) {
         $this->client = $client;
         $this->transformer = $transformer;
         $this->formRegistry = $formRegistry;
+        $this->akeneoListenerFactory = $akeneoListenerFactory;
     }
 
     /**
@@ -229,10 +236,8 @@ class AkeneoProductType extends AbstractType implements CacheAwareInterface
 
         $builder = $this->addAttributes($builder, $attributes, $family, $options);
 
-        $builder->addEventSubscriber(new AkeneoProductListener(
-            $this->getFamilyApi(),
-            $this->getFamilyVariantApi(),
-            $this->getProductModelApi(),
+        $builder->addEventSubscriber($this->akeneoListenerFactory->createProductListener(
+            $this->client,
             $attributes
         ));
 

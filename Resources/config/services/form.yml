@@ -3,6 +3,14 @@ parameters:
     eav_manager.akeneo.form.type.product_model.class: CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoProductModelType
 
 services:
+    CleverAge\EAVManager\AkeneoProductBundle\Form\EventListener\AkeneoListenerFactory: ~
+
+    CleverAge\EAVManager\AkeneoProductBundle\Form\EventListener\AkeneoListenerFactoryInterface: '@CleverAge\EAVManager\AkeneoProductBundle\Form\EventListener\AkeneoListenerFactory'
+
+    CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductTransformer:
+        public: false
+        autowire: true
+
     CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductTransformer:
         public: false
         autowire: true
