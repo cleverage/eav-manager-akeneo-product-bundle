@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * Handling basic text filtering in Akeneo API
+ * @TODO handle this with select2 or improve this class
  */
 class MultiTextFilterType extends AbstractFilterType
 {
@@ -53,6 +54,7 @@ class MultiTextFilterType extends AbstractFilterType
 
         $splitData = array_unique($splitData);
         $multiData = count($splitData) > 1;
+        $operatorUniqueItem = $filter->getOption('operator_unique_item', Operator::EQUAL);
 
         foreach ($filter->getAttributes() as $attribute) {
             if (!$queryHandler->getSearchBuilder()->hasFilter($attribute)) {
@@ -66,8 +68,8 @@ class MultiTextFilterType extends AbstractFilterType
                 } else {
                     $queryHandler->getSearchBuilder()->addFilter(
                         $attribute,
-                        $filter->getOption('operator_unique_item', Operator::EQUAL),
-                        $splitData[0],
+                        $operatorUniqueItem,
+                        Operator::IN == $operatorUniqueItem ? $splitData : $splitData[0],
                         $this->getContext($queryHandler, $filter)
                     );
                 }
