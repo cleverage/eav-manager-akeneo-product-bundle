@@ -11,11 +11,9 @@ services:
         public: false
         autowire: true
 
-    eav_manager.akeneo.transformer.product_model:
-        class: CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductModelTransformer
-        arguments:
-            - '@Akeneo\Pim\ApiClient\AkeneoPimClientInterface'
-            - '@eav_manager.akeneo.manager.context'
+    CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductModelTransformer:
+        public: false
+        autowire: true
 
     eav_manager.akeneo.form.type.product:
         class: '%eav_manager.akeneo.form.type.product.class%'
@@ -30,10 +28,9 @@ services:
 
     eav_manager.akeneo.form.type.product_model:
         class: '%eav_manager.akeneo.form.type.product_model.class%'
+        autowire: true
         arguments:
-            - '@Akeneo\Pim\ApiClient\AkeneoPimClientInterface'
-            - '@eav_manager.akeneo.transformer.product_model'
-            - '@form.registry'
+            $transformer: '@CleverAge\EAVManager\AkeneoProductBundle\Form\Transformer\AkeneoProductModelTransformer'
         calls:
             - [setCache, ['@eav_manager.akeneo.api.cache']]
         tags:
