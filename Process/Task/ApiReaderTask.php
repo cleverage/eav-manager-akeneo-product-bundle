@@ -97,7 +97,7 @@ class ApiReaderTask extends AbstractConfigurableTask implements IterableTaskInte
             $options['pageSize'],
             [
                 'search' => $options['search'],
-
+                'attributes' => $options['attributes'],
             ]
         );
     }
@@ -118,12 +118,14 @@ class ApiReaderTask extends AbstractConfigurableTask implements IterableTaskInte
             [
                 'pageSize' => self::DEFAULT_PAGE_SIZE,
                 'search' => [],
+                'attributes' => null,
                 'locale' => $this->contextManager->getLocale(),
             ]
         );
         $resolver->setAllowedTypes('endpoint', ['string']);
         $resolver->setAllowedTypes('pageSize', ['integer']);
         $resolver->setAllowedTypes('search', ['array', 'string']);
+        $resolver->setAllowedTypes('attributes', ['string', 'NULL']);
         $resolver->setAllowedTypes('locale', ['string']);
         $resolver->setNormalizer('search', function (Options $options, $value) {
             if (is_string($value)) {
