@@ -247,9 +247,13 @@ class AkeneoContextManager
      *
      * @return mixed
      */
-    public function getPropertyValue(string $attributeCode, array $product)
+    public function getPropertyValue(string $attributeCode, array $product, array $productModel = null)
     {
         if (!$this->isPropertyExist($attributeCode, $product)) {
+            if (null !== $productModel) {
+                return $this->getPropertyValue($attributeCode, $productModel);
+            }
+
             return null;
         }
 
@@ -261,9 +265,13 @@ class AkeneoContextManager
      * @param string $attributeCode
      * @return null|string
      */
-    public function getPropertyLabel(string $attributeCode, array $product): ?string
+    public function getPropertyLabel(string $attributeCode, array $product, array $productModel = null): ?string
     {
         if (!$this->isPropertyExist($attributeCode, $product)) {
+            if (null !== $productModel) {
+                return $this->getPropertyLabel($attributeCode, $productModel);
+            }
+
             return null;
         }
 
