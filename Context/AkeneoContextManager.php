@@ -235,10 +235,15 @@ class AkeneoContextManager
     }
 
 
-    public function isPropertyExist(string $attributeCode, array $product): bool
+    public function isPropertyExist(string $attributeCode, array $product, array $productModel = null): bool
     {
         return array_key_exists($attributeCode, $product['values'])
-            && !empty($product['values'][$attributeCode]);
+            && !empty($product['values'][$attributeCode])
+            || (
+                null !== $productModel
+                && array_key_exists($attributeCode, $productModel['values'])
+                && !empty($productModel['values'][$attributeCode])
+            );
     }
 
     /**
@@ -288,13 +293,13 @@ class AkeneoContextManager
      * @return null|string
      * @throws \RuntimeException
      */
-    public function getAmount(array $product, string $attributeCode): ?string
+    public function getAmount(string $attributeCode, array $product, array $productModel = null): ?string
     {
-        if (!$this->isPropertyExist($attributeCode,$product)) {
+        if (!$this->isPropertyExist($attributeCode, $product, $productModel)) {
             return null;
         }
 
-        $data = $this->getValue($product['values'][$attributeCode]);
+        $data = $this->getPropertyValue($attributeCode, $product, $productModel);
 
         $data = isset($data[0]['amount']) ? $data[0] : $data;
 
