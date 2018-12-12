@@ -27,6 +27,7 @@ abstract class AbstractAkeneoProductTransformer
         'identifier',
         'family',
         'parent',
+        'code',
         'groups',
         'categories',
         'enabled',
