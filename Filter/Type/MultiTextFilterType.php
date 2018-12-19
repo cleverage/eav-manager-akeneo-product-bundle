@@ -52,7 +52,6 @@ class MultiTextFilterType extends AbstractFilterType
             $splitData = $tmpData;
         }
 
-        $splitData = array_unique($splitData);
         $multiData = count($splitData) > 1;
         $operatorUniqueItem = $filter->getOption('operator_unique_item', Operator::EQUAL);
 
