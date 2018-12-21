@@ -10,8 +10,8 @@ sidus_admin:
                     template: '@CleverAgeEAVManagerAdmin/Base/list.html.twig'
                 edit:
                     path: /{identifier}/edit
-                    # Form type is set dynamically at runtime
-                    template: 'CleverAgeEAVManagerAkeneoProductBundle:Product:edit.html.twig'
+                    form_type: CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoProductType
+                    template: 'CleverAgeEAVManagerAkeneoProduct/Product/edit.html.twig'
                 editModel:
                     path:     /product/models/{family}/{code}/edit
                     defaults:

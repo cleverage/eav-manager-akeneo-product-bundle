@@ -22,7 +22,7 @@ class ProductModelController extends ProductController
     public function editAction(Request $request, $code)
     {
         $data = $this->getProduct($code);
-        $data['id'] = $code; // Just a little hack to allow reuse of existing templates
+        $data['id'] = $data['identifier'] = $code; // Just a little hack to allow reuse of existing templates
         $data['family'] = $request->get('family');
         $form = $this->getForm($request, $data, $this->getFormOptions($request, $data));
 

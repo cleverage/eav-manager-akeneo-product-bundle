@@ -5,8 +5,8 @@ namespace CleverAge\EAVManager\AkeneoProductBundle\Form\EventListener;
 use Akeneo\Pim\ApiClient\Api\FamilyApiInterface;
 use Akeneo\Pim\ApiClient\Api\FamilyVariantApiInterface;
 use Akeneo\Pim\ApiClient\Api\ProductModelApiInterface;
-use CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoProductModelType;
 use CleverAge\EAVManager\AkeneoProductBundle\Form\Type\AkeneoProductType;
+use CleverAge\EAVManager\AkeneoProductBundle\Form\Type\ProductModelType;
 use Mopa\Bundle\BootstrapBundle\Form\Type\TabType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -94,7 +94,7 @@ class AkeneoProductListener implements EventSubscriberInterface
      */
     protected function isProductModel(FormTypeInterface $formType): bool
     {
-        return $formType instanceof AkeneoProductModelType;
+        return $formType instanceof ProductModelType;
     }
 
     /**
