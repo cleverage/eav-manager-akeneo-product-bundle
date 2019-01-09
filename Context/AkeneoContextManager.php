@@ -293,8 +293,14 @@ class AkeneoContextManager
      * @return null|string
      * @throws \RuntimeException
      */
-    public function getAmount(string $attributeCode, array $product, array $productModel = null): ?string
-    {
+    public function getAmount(
+        string $attributeCode,
+        array $product,
+        array $productModel = null,
+        int $decimals = 2,
+        string $decDelimiter = '.',
+        string $thousandsDelimiter = " "
+    ): ?string {
         if (!$this->isPropertyExist($attributeCode, $product, $productModel)) {
             return null;
         }
@@ -303,6 +309,6 @@ class AkeneoContextManager
 
         $data = isset($data[0]['amount']) ? $data[0] : $data;
 
-        return isset($data['amount']) ? number_format((float) $data['amount'], 2, ',', " ") : null;
+        return isset($data['amount']) ? number_format((float) $data['amount'], $decimals, $decDelimiter, $thousandsDelimiter) : null;
     }
 }
