@@ -129,7 +129,7 @@ class ApiReaderTask extends AbstractConfigurableTask implements IterableTaskInte
         $resolver->setAllowedTypes('locale', ['string']);
         $resolver->setNormalizer('search', function (Options $options, $value) {
             if (is_string($value)) {
-                $value = json_decode($value);
+                $value = json_decode($value, true);
                 if (JSON_ERROR_NONE !== json_last_error()) {
                     throw new \InvalidArgumentException(
                         'Invalide search parameter. Your have to pass a JSON parameter or array :' . json_last_error_msg());
