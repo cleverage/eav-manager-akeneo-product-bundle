@@ -90,7 +90,7 @@ abstract class AbstractAkeneoProductTransformer
                 $attribute = $this->attributeApi->get($attributeCode);
                 switch ($attribute['type']) {
                     case AkeneoAttributeTypes::DATE:
-                        $data = new \DateTime($data);
+                        $data = null !== $data ? new \DateTime($data) : null;
                         break;
                     // @todo other types
                 }
